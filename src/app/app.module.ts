@@ -15,13 +15,16 @@ import {ForgotPasswordRoutingModule} from "./forgot-password/forgot-password-rou
 import {AuthService} from "./services/auth.service";
 import { DocumentsComponent } from './documents/documents.component';
 import {DocumentsRoutingModule} from "./documents/documents-routing.module";
+import { ClassificationsComponent } from './classifications/classifications.component';
+import {ClassificationsRoutingModule} from "./classifications/classifications-routing.module";
 @NgModule({
   declarations: [
     AppComponent,
     SignUpComponent,
     LoginComponent,
     ForgotPasswordComponent,
-    DocumentsComponent
+    DocumentsComponent,
+    ClassificationsComponent
   ],
   imports: [
     AppRoutingModule,
@@ -30,6 +33,7 @@ import {DocumentsRoutingModule} from "./documents/documents-routing.module";
     LoginRoutingModule,
     ForgotPasswordRoutingModule,
     DocumentsRoutingModule,
+    ClassificationsRoutingModule,
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
