@@ -13,7 +13,6 @@ import {HttpClientModule} from "@angular/common/http";
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import {ForgotPasswordRoutingModule} from "./forgot-password/forgot-password-routing.module";
 import {AuthService} from "./auth.service";
-
 @NgModule({
   declarations: [
     AppComponent,

@@ -2,14 +2,16 @@ import {NgModule} from "@angular/core";
 import {SignUpComponent} from "./sign-up.component";
 import {RouterModule, Routes} from "@angular/router";
 import {SignUpRoutingModule} from "./sign-up-routing.module";
+import {AuthService} from "../auth.service";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 
 @NgModule({
   imports: [
-    SignUpRoutingModule
+    SignUpRoutingModule, FormsModule, ReactiveFormsModule
   ],
   exports: [SignUpComponent],
   declarations: [SignUpComponent],
-  providers: []
+  providers: [AuthService]
 })
 export class SignUpModule {}
