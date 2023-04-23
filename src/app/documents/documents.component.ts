@@ -1,9 +1,10 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-documents',
   templateUrl: './documents.component.html',
-  styleUrls: ['./documents.component.css']
+  styleUrls: ['./documents.component.css', 'popup.scss']
 })
 export class DocumentsComponent implements OnInit, AfterViewInit {
   popupWindowUploadFile!: Element | null;
@@ -95,6 +96,21 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
     this.popupAddLangBtn!.addEventListener("click", () => {
       this.openPopupWindow(this.popupWindowUnavailableTranslateWindow);
       this.closePopupWindow(this.popupWindowAvailTranslateWindow);
+    });
+
+    /*Dropdown Menu*/
+    $(".dropdown").click(function () {
+      $(this).attr("tabindex", 1).focus();
+      $(this).toggleClass("active");
+      $(this).find(".dropdown-menu").slideToggle(300);
+    });
+    $(".dropdown").focusout(function () {
+      $(this).removeClass("active");
+      $(this).find(".dropdown-menu").slideUp(300);
+    });
+    $(".dropdown .dropdown-menu li").click(function () {
+      $(this).parents(".dropdown").find("span").text($(this).text());
+      $(this).parents(".dropdown").find("input").attr("value", $(this).attr("id") as string);
     });
   }
 

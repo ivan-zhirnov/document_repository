@@ -444,6 +444,7 @@ body {
   border-radius: 12px;
   transition: 0.13s;
   cursor: pointer;
+  padding-top: 100px;
 }
 .popup-upload-btn * {
   transition: 0.13s;
@@ -466,6 +467,7 @@ body {
   text-align: center;
   /* Gray / 600 */
   color: #475467;
+  margin-bottom: 90px;
 }
 .popup-upload-btn__heading span {
   font-style: normal;

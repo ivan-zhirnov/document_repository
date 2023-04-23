@@ -12,7 +12,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import {ForgotPasswordRoutingModule} from "./forgot-password/forgot-password-routing.module";
-import {AuthService} from "./auth.service";
+import {AuthService} from "./services/auth.service";
 import { DocumentsComponent } from './documents/documents.component';
 import {DocumentsRoutingModule} from "./documents/documents-routing.module";
 @NgModule({

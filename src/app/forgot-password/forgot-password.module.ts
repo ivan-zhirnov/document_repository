@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import {ForgotPasswordRoutingModule} from "./forgot-password-routing.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {ForgotPasswordComponent} from "./forgot-password.component";
-import {AuthService} from "../auth.service";
+import {AuthService} from "../services/auth.service";
 
 
 
