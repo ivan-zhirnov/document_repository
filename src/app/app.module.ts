@@ -13,12 +13,15 @@ import {HttpClientModule} from "@angular/common/http";
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import {ForgotPasswordRoutingModule} from "./forgot-password/forgot-password-routing.module";
 import {AuthService} from "./auth.service";
+import { DocumentsComponent } from './documents/documents.component';
+import {DocumentsRoutingModule} from "./documents/documents-routing.module";
 @NgModule({
   declarations: [
     AppComponent,
     SignUpComponent,
     LoginComponent,
-    ForgotPasswordComponent
+    ForgotPasswordComponent,
+    DocumentsComponent
   ],
   imports: [
     AppRoutingModule,
@@ -26,6 +29,7 @@ import {AuthService} from "./auth.service";
     SignUpRoutingModule,
     LoginRoutingModule,
     ForgotPasswordRoutingModule,
+    DocumentsRoutingModule,
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
