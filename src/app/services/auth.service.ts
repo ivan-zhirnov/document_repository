@@ -58,11 +58,11 @@ export class AuthService {
     return this.apiService.post("authorizations/send-token", formData, {headers: headers})
   }
 
-  getMe(clientId: string): Observable<any> {
+  getProfile(clientId: string): Observable<any> {
     return this.apiService.get(`me/${clientId}`)
   }
 
-  updateClient(clientId: string, surname: string, name: string, patronymic: string, mail: string, password: string): Observable<any> {
+  updateProfile(clientId: string, surname: string, name: string, patronymic: string, mail: string, password: string): Observable<any> {
     let body = {
       entityId: clientId,
       surname: surname,
