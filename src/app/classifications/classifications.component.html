@@ -78,14 +78,15 @@
     <h5 class="popup__heading">Sure you want to accept?</h5>
     <form class="popup__form popup-form classification-form">
       <label for="" class="popup-form__label">Write your name</label>
-      <input
+      <input [(ngModel)]="newClassificationName"
         type="text"
         name="folder-title"
         placeholder="Your Name"
         class="popup-form__input" />
       <div class="popup-form__menu">
         <button class="popup-form__cancel-btn" type="reset">Cancel</button>
-        <button class="popup-form__confirm-btn" type="submit">Confirm</button>
+        <button class="popup-form__confirm-btn" type="submit"
+                (click)="saveClassification(newClassificationName)">Confirm</button>
       </div>
     </form>
   </div>

@@ -1,4 +1,5 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {ClassificationService} from "../services/classification.service";
 
 @Component({
   selector: 'app-classifications',
@@ -9,19 +10,20 @@ export class ClassificationsComponent implements OnInit, AfterViewInit {
   classificationPopupWindow!: Element | null;
   classificationPopup!: Element | null;
   addClassificationBtn!: Element | null;
-
   popupCloseBtns!: NodeListOf<Element>;
-
   classificationForm!: HTMLFormElement | null;
   classificationFormCloseBtn!: Element | null;
-
   folderList!: Element | null;
-
   folderTemplate!: Node | null;
 
-  constructor() { }
+  classifications: Array<any> = [];
+  newClassificationName: string = '';
+
+  constructor(private classificationsService: ClassificationService) { }
 
   ngOnInit(): void {
+    this.classificationsService.getClassifications()
+      .subscribe(classifications => this.classifications = classifications)
   }
 
   ngAfterViewInit() {
@@ -108,6 +110,12 @@ export class ClassificationsComponent implements OnInit, AfterViewInit {
 
   renderFolder(folder: any) {
     this.folderList!.append(folder);
+  }
+
+  saveClassification(name: string) {
+    this.classificationsService.saveClassification(name).subscribe();
+    this.newClassificationName = '';
+    this.closePopupWindow(this.classificationPopupWindow);
   }
 
 }

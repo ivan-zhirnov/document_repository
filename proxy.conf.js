@@ -11,7 +11,7 @@ module.exports = [
   {
     context: [
       "/api/v1/files",
-      "/api/v1/files/languages",
+      "/api/v1/languages",
       "/api/v1/classifications"
     ],
     target: "http://localhost:8091",

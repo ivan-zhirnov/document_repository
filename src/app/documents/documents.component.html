@@ -137,7 +137,7 @@
     <div class="popup__dropdown-container container">
       <div class="dropdown">
         <div class="select">
-          <span> Choose language </span>
+          <span>{{!!this.selectedLanguage ? this.selectedLanguage.name : 'Choose language'}}</span>
           <div class="icon">
             <svg
               id="up-icon"
@@ -156,10 +156,8 @@
         </div>
         <input type="hidden" name="language" />
         <ul class="dropdown-menu">
-          <li id="russian">Russian</li>
-          <li id="english">English</li>
-          <li id="english">Kazakh</li>
-          <li id="english">Altaic</li>
+          <li *ngFor="let language of languages" id="{{language.entityId}}" value="{{language.name}}"
+              (click)="selectLanguage(language)">{{language.name}}</li>
         </ul>
       </div>
     </div>
@@ -184,11 +182,11 @@
       <span class="popup-upload-btn__heading">
             <span>Click to upload</span> or drag and drop DOC, DOCX, TXT, PDF AND RTF
           </span>
-      <input type="file" name="file" id="file-input" style="display: none" />
+      <input type="file" [(ngModel)]="inputFile" name="file" id="file-input" style="display: none" />
     </label>
     <div class="popup__menu">
       <button class="popup__cancel-btn">Cancel</button>
-      <button class="popup__confirm-btn">Confirm</button>
+      <button class="popup__confirm-btn" (click)="saveFile()">Confirm</button>
     </div>
   </div>
 </div>
@@ -266,7 +264,7 @@
     </p>
     <div class="popup__menu">
       <button class="popup__cancel-btn">Cancel</button>
-      <button class="popup__delete-btn">Delete</button>
+      <button class="popup__delete-btn" (click)="deleteFile(1)">Delete</button>
     </div>
   </div>
 </div>

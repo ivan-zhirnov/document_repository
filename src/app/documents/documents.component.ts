@@ -1,5 +1,8 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
 import * as $ from 'jquery';
+import {FileService} from "../services/file.service";
+import {LanguageService} from "../services/language.service";
+import {i18nMetaToJSDoc} from "@angular/compiler/src/render3/view/i18n/meta";
 
 @Component({
   selector: 'app-documents',
@@ -13,22 +16,30 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
   popupWindowDelete!: Element | null;
   popupWindowAvailTranslateWindow!: Element | null;
   popupWindowUnavailableTranslateWindow!: Element | null;
-
   popupWindowCloseBtns!: NodeListOf<Element>;
   popupWindowCancelBtns!: NodeListOf<Element>;
   popupAddLangBtn!: Element | null;
-
   popupWindowUploadFileConfirmBtn!: Element | null;
-
   uploadFileBtn!: Element | null;
   downloadFileBtns!: NodeListOf<Element>;
   deleteFileBtns!: NodeListOf<Element>;
   updateFileBtns!: NodeListOf<Element>;
 
+  documents: Array<any> = [];
+  languages: Array<any> = [];
+  selectedLanguage: any;
+  selectedClassification: any = {entityId: 1};
+  inputFile!: File;
 
-  constructor() { }
+
+  constructor(private fileService: FileService,
+              private languagesService: LanguageService) { }
 
   ngOnInit(): void {
+    this.fileService.getFiles()
+      .subscribe(documents => this.documents = documents);
+    this.languagesService.getLanguages()
+      .subscribe(languages => this.languages = languages.list);
   }
 
   ngAfterViewInit() {
@@ -138,6 +149,19 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
     if (e.key === "Escape") {
       this.closePopupWindow(popupWindow);
     }
+  }
+
+  selectLanguage(language: any) {
+    this.selectedLanguage = language;
+  }
+
+  saveFile() {
+    this.fileService.saveFile(this.inputFile, this.selectedClassification.entityId, this.selectedLanguage.entityId)
+      .subscribe();
+  }
+
+  deleteFile(id: number) {
+    this.fileService.deleteFile(id).subscribe();
   }
 
 }

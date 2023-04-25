@@ -11,7 +11,7 @@ export class FileService {
   constructor(private apiService: ApiService) { }
 
   getFiles(): Observable<any> {
-    return this.apiService.get("/files");
+    return this.apiService.get("files");
   }
 
   saveFile(file: File, classificationId: number, languageId: number): Observable<any> {
