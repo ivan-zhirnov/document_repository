@@ -15,6 +15,7 @@
         <input type="password" formControlName="password" placeholder="xxxxxx">
       </div>
       <p class="dop">...</p>
+      <a class="error" *ngIf="loginError">{{loginError}}</a>
       <button type="submit" class="login">Login</button>
       <img src="assets/images/or.png" alt="or" class="or">
       <a [routerLink]="'sign-up'" class="sign">Sing up</a>

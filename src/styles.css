@@ -178,6 +178,17 @@ input{
   border-radius: 10px/10px;
 }
 
+.error {
+  display: flex;
+  margin: auto;
+  width: 260px;
+  height: 30px;
+  color: #e7152e;
+  text-decoration: none;
+  font-size: 15px;
+  text-align: center;
+}
+
 .password {
   display: flex;
   margin: auto;

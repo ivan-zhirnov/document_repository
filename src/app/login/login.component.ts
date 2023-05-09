@@ -12,6 +12,7 @@ export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
   login: string = 'ivanov@mail.ru';
   password: string = '12345';
+  loginError: string = '';
 
   constructor(private fb: FormBuilder,
               private authService: AuthService,
@@ -25,10 +26,10 @@ export class LoginComponent implements OnInit {
   }
 
   logIn(value: any) {
-    this.authService.login(value.login, value.password).subscribe(() => {
-      this.router.navigate(['classifications'])
-      }, () => {
+    this.authService.login(value.login, value.password).subscribe(res => {
       this.router.navigate(['classifications']);
+      }, error => {
+      this.loginError = error.error.status.description;
       }
     );
   }

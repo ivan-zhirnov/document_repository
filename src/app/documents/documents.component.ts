@@ -2,7 +2,9 @@ import {AfterViewInit, Component, OnInit} from '@angular/core';
 import * as $ from 'jquery';
 import {FileService} from "../services/file.service";
 import {LanguageService} from "../services/language.service";
-import {i18nMetaToJSDoc} from "@angular/compiler/src/render3/view/i18n/meta";
+import {Router} from "@angular/router";
+import {Document} from "./document.model";
+import {Language} from "./language.model";
 
 @Component({
   selector: 'app-documents',
@@ -33,13 +35,23 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
 
 
   constructor(private fileService: FileService,
-              private languagesService: LanguageService) { }
+              private languagesService: LanguageService,
+              private router: Router) {
+  }
 
   ngOnInit(): void {
     this.fileService.getFiles()
-      .subscribe(documents => this.documents = documents);
+      .subscribe(documents => {
+        this.documents = documents.list.map((document: any) => {
+          return new Document(document);
+        })
+      });
     this.languagesService.getLanguages()
-      .subscribe(languages => this.languages = languages.list);
+      .subscribe(languages => {
+        this.languages = languages.list.map((language: any) => {
+          return new Language(language);
+        })
+      });
   }
 
   ngAfterViewInit() {
@@ -153,6 +165,10 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
 
   selectLanguage(language: any) {
     this.selectedLanguage = language;
+  }
+
+  onFileSelected(event: any) {
+    this.inputFile = event.target.files[0];
   }
 
   saveFile() {

@@ -8,7 +8,7 @@
 <body>
 <header class="header">
   <div class="wrapper">
-    <a href="/" class="logo-link">
+    <a href="/classifications" class="logo-link">
       <img src="assets/images/logo.png" alt="Disk" class="logo-link__logo" />
       <span class="logo-link__title">Logo</span>
     </a>
@@ -181,8 +181,8 @@
       </div>
       <span class="popup-upload-btn__heading">
             <span>Click to upload</span> or drag and drop DOC, DOCX, TXT, PDF AND RTF
-          </span>
-      <input type="file" [(ngModel)]="inputFile" name="file" id="file-input" style="display: none" />
+      </span>
+      <input type="file" (change)="onFileSelected($event)" name="file" id="file-input" style="display: none" />
     </label>
     <div class="popup__menu">
       <button class="popup__cancel-btn">Cancel</button>
