@@ -116,7 +116,10 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
       this.openPopupWindow(this.popupWindowUnavailableTranslateWindow);
       this.closePopupWindow(this.popupWindowAvailTranslateWindow);
     });
+  }
 
+  ngAfterViewInit() {
+    this.loadAllSelectors();
     /*Dropdown Menu*/
     $(".dropdown").click(function () {
       $(this).attr("tabindex", 1).focus();
@@ -133,13 +136,8 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
     });
   }
 
-  ngAfterViewInit() {
-    this.loadAllSelectors();
-  }
-
   closePopupWindow(popupSelector: Element | null) {
     popupSelector!.classList.add("popup-window--hidden");
-    this.loadAllSelectors();
     this.selectedLanguage = null;
     this.selectedDocument = null;
   }
@@ -210,12 +208,5 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
     this.selectedDocument = document;
   }
 
-  closePopup() {
-    this.closePopupWindow(this.popupWindowUploadFile);
-    this.closePopupWindow(this.popupWindowDelete);
-    this.closePopupWindow(this.popupWindowDownloadFile);
-    this.closePopupWindow(this.popupWindowUploadFileConfirmBtn);
-    this.closePopupWindow(this.popupWindowUpdate);
-  }
 
 }
