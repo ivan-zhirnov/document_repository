@@ -875,7 +875,7 @@ body {
   color: #6b6c7e;
 }
 .files-list-filter-title--downloads {
-  margin-right: 137px;
+  margin-right: 242px;
 }
 .files-list-filter-title--last-moidified {
   margin-right: 88px;
@@ -933,7 +933,7 @@ body {
   margin-left: 37px;
   display: flex;
   align-items: center;
-  gap: 3px;
+  gap: 10px;
 }
 .file-item-menu button {
   padding: 0;

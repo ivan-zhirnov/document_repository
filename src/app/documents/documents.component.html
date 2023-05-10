@@ -62,11 +62,9 @@
           </div>
         </button>
         <div class="files-list-filter-title files-list-filter-title--downloads">Downloads</div>
-        <div class="files-list-filter-title files-list-filter-title--last-moidified">
-          Last Modifited
-        </div>
       </div>
-      <div class="file-item">
+      <div (click)="loadAllSelectors()" *ngFor="let document of documents">
+        <div class="file-item">
         <div class="file-item__icon">
           <div class="file-icon">
             <svg width="32" height="40">
@@ -74,10 +72,9 @@
             </svg>
           </div>
         </div>
-        <h4 class="file-item__heading">Коммунальные услуги</h4>
-        <span class="file-item__downloads-count">537</span>
-        <span class="file-item__date"> 16/02/2021 </span>
-        <div class="file-item-menu">
+        <h4 class="file-item__heading">{{document.name}}</h4>
+        <span class="file-item__downloads-count">{{document.downloads}}</span>
+        <div (click)="selectFile(document)" class="file-item-menu">
           <button class="file-item-menu__download-btn">
             <svg width="15" height="15">
               <use xlink:href="./assets/icons/download-file-icon.svg#download-icon"></use>
@@ -93,38 +90,10 @@
           </button>
         </div>
       </div>
+      </div>
     </div>
   </div>
 </main>
-<!-- <template id="file-template">
-  <div class="file-item">
-    <div class="file-item__icon">
-      <div class="file-icon">
-        <svg width="32" height="40">
-          <use xlink:href="./assets/icons/pdf-icon.svg#pdf-icon"></use>
-        </svg>
-      </div>
-    </div>
-    <h4 class="file-item__heading">Коммунальные услуги</h4>
-    <span class="file-item__downloads-count">537</span>
-    <span class="file-item__date"> 16/02/2021 </span>
-    <div class="file-item-menu">
-      <button class="file-item-menu__download-btn">
-        <svg width="15" height="15">
-          <use xlink:href="./assets/icons/download-file-icon.svg#download-icon"></use>
-        </svg>
-      </button>
-      <button class="file-item-menu__update-btn">
-        <div class="update-file-icon"></div>
-      </button>
-      <button class="file-item-menu__delete-btn">
-        <svg width="15" height="15">
-          <use xlink:href="./assets/icons/delete-file-icon.svg#delete-icon"></use>
-        </svg>
-      </button>
-    </div>
-  </div>
-</template> -->
 <div class="popup-window popup-window--hidden" id="upload-popup">
   <div class="popup-window__popup popup popup--upload">
     <button class="popup__close-btn">
@@ -264,7 +233,7 @@
     </p>
     <div class="popup__menu">
       <button class="popup__cancel-btn">Cancel</button>
-      <button class="popup__delete-btn" (click)="deleteFile(1)">Delete</button>
+      <button class="popup__delete-btn" (click)="deleteFile()">Delete</button>
     </div>
   </div>
 </div>

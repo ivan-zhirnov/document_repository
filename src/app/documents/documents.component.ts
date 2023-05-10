@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {AfterViewChecked, AfterViewInit, Component, OnInit} from '@angular/core';
 import * as $ from 'jquery';
 import {FileService} from "../services/file.service";
 import {LanguageService} from "../services/language.service";
@@ -29,9 +29,10 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
 
   documents: Array<any> = [];
   languages: Array<any> = [];
-  selectedLanguage: any;
+  selectedLanguage!: Language | null;
   selectedClassification: any = {entityId: 1};
   inputFile!: File;
+  selectedDocument!: Document | null;
 
 
   constructor(private fileService: FileService,
@@ -40,12 +41,7 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.fileService.getFiles()
-      .subscribe(documents => {
-        this.documents = documents.list.map((document: any) => {
-          return new Document(document);
-        })
-      });
+    this.getFiles();
     this.languagesService.getLanguages()
       .subscribe(languages => {
         this.languages = languages.list.map((language: any) => {
@@ -54,7 +50,7 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
       });
   }
 
-  ngAfterViewInit() {
+  loadAllSelectors() {
     this.popupWindowUploadFile = document.querySelector("#upload-popup");
     this.popupWindowDownloadFile = document.querySelector("#download-popup");
     this.popupWindowUpdate = document.querySelector("#update-popup");
@@ -137,8 +133,15 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
     });
   }
 
+  ngAfterViewInit() {
+    this.loadAllSelectors();
+  }
+
   closePopupWindow(popupSelector: Element | null) {
     popupSelector!.classList.add("popup-window--hidden");
+    this.loadAllSelectors();
+    this.selectedLanguage = null;
+    this.selectedDocument = null;
   }
 
   openPopupWindow(popupSelector: any) {
@@ -172,12 +175,30 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
   }
 
   saveFile() {
-    this.fileService.saveFile(this.inputFile, this.selectedClassification.entityId, this.selectedLanguage.entityId)
-      .subscribe();
+    this.fileService.saveFile(this.inputFile, this.selectedClassification.entityId, this.selectedLanguage!.entityId!)
+      .subscribe(() => {
+        this.getFiles();
+      });
   }
 
-  deleteFile(id: number) {
-    this.fileService.deleteFile(id).subscribe();
+  deleteFile() {
+    this.fileService.deleteFile(this.selectedDocument!.entityId!).subscribe(() => {
+      this.closePopupWindow(this.popupWindowDelete);
+      this.getFiles();
+    });
+  }
+
+  getFiles() {
+    this.fileService.getFiles()
+      .subscribe(documents => {
+        this.documents = documents.list.map((document: any) => {
+          return new Document(document);
+        })
+      });
+  }
+
+  selectFile(document: Document) {
+    this.selectedDocument = document;
   }
 
 }
