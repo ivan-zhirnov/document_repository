@@ -61,7 +61,19 @@
             </svg>
           </div>
         </button>
-        <div class="folder-list-filter-title">Last Modifited</div>
+<!--        <div class="folder-list-filter-title">Last Modifited</div>-->
+      </div>
+      <div *ngFor="let classification of classifications">
+        <div class="file-item">
+          <h4 class="folder-item__heading">{{classification.name}}</h4>
+          <div class="file-item-menu">
+            <button class="file-item-menu__delete-btn" (click)="deleteClassification(classification)">
+              <svg width="15" height="15">
+                <use xlink:href="./assets/icons/delete-file-icon.svg#delete-icon"></use>
+              </svg>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>

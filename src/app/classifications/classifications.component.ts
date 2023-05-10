@@ -1,5 +1,6 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {ClassificationService} from "../services/classification.service";
+import {Classification} from "./classification.model";
 
 @Component({
   selector: 'app-classifications',
@@ -16,14 +17,15 @@ export class ClassificationsComponent implements OnInit, AfterViewInit {
   folderList!: Element | null;
   folderTemplate!: Node | null;
 
-  classifications: Array<any> = [];
+  classifications: Array<Classification> = [];
   newClassificationName: string = '';
+
+  protected readonly document = document;
 
   constructor(private classificationsService: ClassificationService) { }
 
   ngOnInit(): void {
-    this.classificationsService.getClassifications()
-      .subscribe(classifications => this.classifications = classifications)
+    this.getClassifications();
   }
 
   ngAfterViewInit() {
@@ -113,9 +115,28 @@ export class ClassificationsComponent implements OnInit, AfterViewInit {
   }
 
   saveClassification(name: string) {
-    this.classificationsService.saveClassification(name).subscribe();
-    this.newClassificationName = '';
-    this.closePopupWindow(this.classificationPopupWindow);
+    this.classificationsService.saveClassification(name).subscribe(() => {
+      this.getClassifications();
+      this.newClassificationName = '';
+      this.closePopupWindow(this.classificationPopupWindow);
+    });
   }
+
+  deleteClassification(classification: Classification) {
+    this.classificationsService.deleteClassification(classification.entityId!)
+      .subscribe(() => {
+        this.getClassifications();
+      })
+  }
+
+  getClassifications() {
+    this.classificationsService.getClassifications()
+      .subscribe(classifications => {
+        this.classifications = classifications.list.map((classification: any) => {
+          return new Classification(classification);
+        })
+      });
+  }
+
 
 }

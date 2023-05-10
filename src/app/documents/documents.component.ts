@@ -5,6 +5,8 @@ import {LanguageService} from "../services/language.service";
 import {Router} from "@angular/router";
 import {Document} from "./document.model";
 import {Language} from "./language.model";
+import {Classification} from "../classifications/classification.model";
+import {ClassificationService} from "../services/classification.service";
 
 @Component({
   selector: 'app-documents',
@@ -30,13 +32,14 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
   documents: Array<any> = [];
   languages: Array<any> = [];
   selectedLanguage!: Language | null;
-  selectedClassification: any = {entityId: 1};
+  selectedClassification!: Classification | null;
   inputFile!: File;
   selectedDocument!: Document | null;
 
 
   constructor(private fileService: FileService,
               private languagesService: LanguageService,
+              private classificationService: ClassificationService,
               private router: Router) {
   }
 
@@ -48,6 +51,12 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
           return new Language(language);
         })
       });
+    this.classificationService.getClassifications()
+      .subscribe(classifications => {
+        this.selectedClassification = classifications.list.map((classification: any) => {
+          return new Classification(classification);
+        })[0];
+      })
   }
 
   loadAllSelectors() {
@@ -173,7 +182,7 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
   }
 
   saveFile() {
-    this.fileService.saveFile(this.inputFile, this.selectedClassification.entityId, this.selectedLanguage!.entityId!)
+    this.fileService.saveFile(this.inputFile, this.selectedClassification!.entityId!, this.selectedLanguage!.entityId!)
       .subscribe(() => {
         this.getFiles();
         this.closePopupWindow(this.popupWindowUploadFile);
