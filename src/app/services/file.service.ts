@@ -65,10 +65,8 @@ export class FileService {
   }
 
   getFileByLanguage(documentId: number, languageId: number): Observable<any> {
-    let httpParams = new HttpParams();
-    httpParams.append("documentId", documentId);
-    httpParams.append("languageId", languageId);
-    return this.apiService.get("files", {params: httpParams});
+    const headers = new Headers({'accept': '*/*'})
+    return this.apiService.get(`files?documentId=${documentId}&languageId=${languageId}`, {headers: headers});
   }
 
   deleteFileByLanguage(documentId: number, languageId: number): Observable<any> {

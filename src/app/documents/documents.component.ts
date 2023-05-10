@@ -178,12 +178,14 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
     this.fileService.saveFile(this.inputFile, this.selectedClassification.entityId, this.selectedLanguage!.entityId!)
       .subscribe(() => {
         this.getFiles();
+        this.closePopupWindow(this.popupWindowUploadFile);
       });
   }
 
   deleteFile() {
     this.fileService.deleteFile(this.selectedDocument!.entityId!).subscribe(() => {
       this.closePopupWindow(this.popupWindowDelete);
+      this.closePopupWindow(this.popupWindowAvailTranslateWindow);
       this.getFiles();
     });
   }
@@ -197,8 +199,23 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
       });
   }
 
+  downloadFile() {
+    this.fileService.getFileByLanguage(this.selectedDocument?.entityId!, this.selectedDocument?.language?.entityId!)
+      .subscribe(() => {
+        this.closePopupWindow(this.popupWindowDownloadFile);
+      });
+  }
+
   selectFile(document: Document) {
     this.selectedDocument = document;
+  }
+
+  closePopup() {
+    this.closePopupWindow(this.popupWindowUploadFile);
+    this.closePopupWindow(this.popupWindowDelete);
+    this.closePopupWindow(this.popupWindowDownloadFile);
+    this.closePopupWindow(this.popupWindowUploadFileConfirmBtn);
+    this.closePopupWindow(this.popupWindowUpdate);
   }
 
 }

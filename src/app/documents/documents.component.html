@@ -72,7 +72,7 @@
             </svg>
           </div>
         </div>
-        <h4 class="file-item__heading">{{document.name}}</h4>
+        <h4 class="file-item__heading">{{document.fullName}}</h4>
         <span class="file-item__downloads-count">{{document.downloads}}</span>
         <div (click)="selectFile(document)" class="file-item-menu">
           <button class="file-item-menu__download-btn">
@@ -163,8 +163,7 @@
   <div class="popup">
     <h3 class="popup__heading">Sure you want to download?</h3>
     <div class="popup__menu">
-      <div class="popup__select">En</div>
-      <div class="popup__select">Ru</div>
+      <div class="popup__select" *ngIf="selectedDocument" (click)="downloadFile()">{{selectedDocument!.language!.name}}</div>
     </div>
   </div>
 </div>
@@ -199,7 +198,7 @@
     </p>
     <div class="popup__menu">
       <button class="popup__cancel-btn">Cancel</button>
-      <button class="popup__confirm-btn">Confirm</button>
+      <button class="popup__confirm-btn" (click)="closePopup()">Confirm</button>
     </div>
   </div>
 </div>
@@ -246,9 +245,9 @@
     </button>
     <h2 class="popup__heading">Document translations</h2>
     <h3 class="popup__subheading">Edit document translations</h3>
-    <div class="popup__select">
-      Ru
-      <button class="popup-select__download">
+    <div class="popup__select" *ngIf="selectedDocument?.language?.name!">
+      {{selectedDocument?.language?.name}}
+      <button class="popup-select__download" (click)="downloadFile()">
         <svg
           id="download-icon"
           width="15"
@@ -263,40 +262,7 @@
             fill="#24292E" />
         </svg>
       </button>
-      <button class="popup-select__delete">
-        <svg
-          width="15"
-          height="15"
-          id="delete-icon"
-          viewBox="0 0 15 15"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg">
-          <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
-            d="M10.625 5C10.9702 5 11.25 5.27982 11.25 5.625V11.875C11.25 12.9105 10.4105 13.75 9.375 13.75H5.625C4.58947 13.75 3.75 12.9105 3.75 11.875V5.625C3.75 5.27982 4.02982 5 4.375 5H10.625ZM10 6.25H5V11.875C5 12.2202 5.27982 12.5 5.625 12.5H9.375C9.72018 12.5 10 12.2202 10 11.875V6.25ZM5.625 1.875C5.625 1.52982 5.90482 1.25 6.25 1.25H8.75C9.09518 1.25 9.375 1.52982 9.375 1.875V2.5H11.875C12.2202 2.5 12.5 2.77982 12.5 3.125C12.5 3.47018 12.2202 3.75 11.875 3.75H3.125C2.77982 3.75 2.5 3.47018 2.5 3.125C2.5 2.77982 2.77982 2.5 3.125 2.5H5.625V1.875Z"
-            fill="black" />
-        </svg>
-      </button>
-    </div>
-    <div class="popup__select">
-      En
-      <button class="popup-select__download">
-        <svg
-          id="download-icon"
-          width="15"
-          height="15"
-          viewBox="0 0 15 15"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg">
-          <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
-            d="M2.14296 1.36364C2.14296 0.610521 2.78255 0 3.57153 0H10.7017C11.0806 0 11.4439 0.143668 11.7119 0.3994L14.5817 3.13879C14.8496 3.39452 15.0001 3.74136 15.0001 4.10302V13.6364C15.0001 14.3895 14.3605 15 13.5715 15H3.39296C3.09709 15 2.85725 14.7711 2.85725 14.4886C2.85725 14.2062 3.09709 13.9773 3.39296 13.9773H13.5715C13.7688 13.9773 13.9287 13.8246 13.9287 13.6364V5.11364H11.0715C10.2826 5.11364 9.64296 4.50312 9.64296 3.75V1.02273H3.57153C3.37429 1.02273 3.21439 1.17536 3.21439 1.36364V5.625C3.21439 5.90742 2.97454 6.13636 2.67868 6.13636C2.38281 6.13636 2.14296 5.90742 2.14296 5.625V1.36364ZM10.7144 1.02294V3.75C10.7144 3.93828 10.8743 4.09091 11.0715 4.09091H13.9284C13.9252 4.00489 13.8881 3.92304 13.8241 3.86196L10.9542 1.12258C10.8903 1.06151 10.8045 1.026 10.7144 1.02294ZM6.64889 9.20455L5.14571 7.68002C4.94294 7.47436 4.95321 7.15073 5.16866 6.95717C5.38411 6.76361 5.72315 6.77342 5.92593 6.97908L8.27887 9.36544C8.47301 9.56234 8.47301 9.86948 8.27887 10.0664L5.92593 12.4527C5.72315 12.6584 5.38411 12.6682 5.16866 12.4746C4.95321 12.2811 4.94294 11.9575 5.14571 11.7518L6.64889 10.2273H2.92173C1.89973 10.2273 1.07143 11.0178 1.07143 11.9931V14.1477C1.07143 14.4301 0.831581 14.6591 0.535714 14.6591C0.239848 14.6591 0 14.4301 0 14.1477V11.9931C0 10.4527 1.30821 9.20455 2.92173 9.20455H6.64889Z"
-            fill="#24292E" />
-        </svg>
-      </button>
-      <button class="popup-select__delete">
+      <button class="popup-select__delete" (click)="deleteFile()">
         <svg
           width="15"
           height="15"
