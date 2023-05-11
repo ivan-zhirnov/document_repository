@@ -57,8 +57,6 @@ export class ApiService {
 
     /* resp.body.blob()*/
     let blob = new Blob([data.body!], {type: resultType});
-    console.log(resultType);
-    console.log(resultFileName);
     let a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
     a.download = resultFileName;
