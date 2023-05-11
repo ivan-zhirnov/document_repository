@@ -878,7 +878,7 @@ body {
   margin-right: 242px;
 }
 .files-list-filter-title--last-moidified {
-  margin-right: 88px;
+  margin-right: 180px;
 }
 
 .file-item {
@@ -910,6 +910,7 @@ body {
   font-size: 14px;
   line-height: 150%;
   color: #6b6c7e;
+  margin-right: 230px;
 }
 .file-item__downloads-count {
   margin-right: 172px;

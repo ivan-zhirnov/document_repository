@@ -62,6 +62,7 @@
             </svg>
           </div>
         </button>
+        <div class="files-list-filter-title files-list-filter-title--last-moidified">Classification</div>
         <div class="files-list-filter-title files-list-filter-title--downloads">Downloads</div>
       </div>
       <div (click)="loadAllSelectors()" *ngFor="let document of documents">
@@ -74,6 +75,7 @@
           </div>
         </div>
         <h4 class="file-item__heading">{{document.name}}</h4>
+          <span class="file-item__date">{{document.classification?.name}}</span>
         <span class="file-item__downloads-count">{{document.downloads}}</span>
         <div (click)="selectFile(document)" class="file-item-menu">
           <button class="file-item-menu__download-btn">
