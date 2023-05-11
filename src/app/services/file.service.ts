@@ -76,4 +76,7 @@ export class FileService {
     return this.apiService.delete("files", {params: httpParams});
   }
 
+  downloadFile(documentId: number, languageId: number): Observable<any> {
+    return this.apiService.getFile(`files/resource/search?documentId=${documentId}&languageId=${languageId}`);
+  }
 }

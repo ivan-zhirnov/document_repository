@@ -207,8 +207,8 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
   }
 
   downloadFile() {
-    this.fileService.getFileByLanguage(this.selectedDocument?.entityId!, this.selectedDocument?.language?.entityId!)
-      .subscribe(() => {
+    this.fileService.downloadFile(this.selectedDocument?.entityId!, this.selectedDocument?.language?.entityId!)
+      .subscribe(data => {
         this.closePopupWindow(this.popupWindowDownloadFile);
       });
   }
