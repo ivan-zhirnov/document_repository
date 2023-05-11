@@ -7,7 +7,7 @@ export class Document {
   fullName: string | undefined;
   name: string | undefined;
   classification: Classification | undefined;
-  language: Language | undefined;
+  languages: Array<Language> = [];
   downloads: number | undefined;
 
   constructor(params: any) {
@@ -18,6 +18,12 @@ export class Document {
     this.name = params.document.name;
     this.downloads = params.downloads;
     this.classification = new Classification(params.document.classification);
-    this.language = new Language(params.resources[0].language);
+    this.languages = params.resources.map((language: any) => {
+      return new Language(language.language);
+    });
+  }
+
+  setLanguages(languages: Array<Language>) {
+    this.languages = languages;
   }
 }

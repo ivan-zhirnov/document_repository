@@ -209,6 +209,14 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
     });
   }
 
+  deleteFileByLanguage(languageId: number | undefined) {
+    this.fileService.deleteFileByLanguage(this.selectedDocument!.entityId!, languageId ? languageId : 1).subscribe(() => {
+      this.selectedDocument?.setLanguages(this.selectedDocument?.languages.filter(language => language.entityId !== languageId));
+      this.closePopupWindow(this.popupWindowDelete);
+      this.getFiles();
+    });
+  }
+
   getFiles() {
     this.fileService.getFiles()
       .subscribe(documents => {
@@ -219,7 +227,16 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
   }
 
   downloadFile(closePopup: boolean = true) {
-    this.fileService.downloadFile(this.selectedDocument?.entityId!, this.selectedDocument?.language?.entityId!)
+    this.fileService.downloadFile(this.selectedDocument?.entityId!, this.selectedDocument?.languages[0]?.entityId!)
+      .subscribe(data => {
+        if (closePopup) {
+          this.closePopupWindow(this.popupWindowDownloadFile);
+        }
+      });
+  }
+
+  downloadFileByLanguage(languageId: number | undefined, closePopup: boolean = true) {
+    this.fileService.downloadFile(this.selectedDocument?.entityId!, languageId ? languageId : 1)
       .subscribe(data => {
         if (closePopup) {
           this.closePopupWindow(this.popupWindowDownloadFile);
@@ -229,12 +246,24 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
 
   selectFile(document: Document) {
     this.selectedDocument = document;
-    this.fileService.getFreeLanguages(this.selectedDocument.entityId!)
+    this.getAvailableLanguages()
+  }
+
+  getAvailableLanguages() {
+    this.fileService.getFreeLanguages(this.selectedDocument!.entityId!)
       .subscribe(languages => {
         this.availableLanguages = languages.list.map((language: any) => {
           return new Language(language);
         })
       })
+  }
+
+  isLanguageOk(document: Document | null): boolean {
+    return !!document?.languages[0]?.name;
+  }
+
+  getLanguage(document: Document | null): string {
+    return document!.languages[0]!.name!;
   }
 
 

@@ -70,10 +70,7 @@ export class FileService {
   }
 
   deleteFileByLanguage(documentId: number, languageId: number): Observable<any> {
-    let httpParams = new HttpParams();
-    httpParams.append("documentId", documentId);
-    httpParams.append("languageId", languageId);
-    return this.apiService.delete("files", {params: httpParams});
+    return this.apiService.delete(`files?documentId=${documentId}&languageId=${languageId}`);
   }
 
   downloadFile(documentId: number, languageId: number): Observable<any> {

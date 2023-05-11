@@ -72,7 +72,7 @@
             </svg>
           </div>
         </div>
-        <h4 class="file-item__heading">{{document.fullName}}</h4>
+        <h4 class="file-item__heading">{{document.name}}</h4>
         <span class="file-item__downloads-count">{{document.downloads}}</span>
         <div (click)="selectFile(document)" class="file-item-menu">
           <button class="file-item-menu__download-btn">
@@ -166,7 +166,8 @@
   <div class="popup">
     <h3 class="popup__heading">Sure you want to download?</h3>
     <div class="popup__menu">
-      <div class="popup__select" *ngIf="selectedDocument" (click)="downloadFile()">{{selectedDocument!.language!.name}}</div>
+      <div class="popup__select" *ngIf="isLanguageOk(selectedDocument)"
+           (click)="downloadFile()">{{getLanguage(selectedDocument)}}</div>
     </div>
   </div>
 </div>
@@ -248,9 +249,9 @@
     </button>
     <h2 class="popup__heading">Document translations</h2>
     <h3 class="popup__subheading">Edit document translations</h3>
-    <div class="popup__select" *ngIf="selectedDocument?.language?.name!">
-      {{selectedDocument?.language?.name}}
-      <button class="popup-select__download" (click)="downloadFile(false)">
+    <div class="popup__select" *ngFor="let language of selectedDocument?.languages!">
+      {{language.name}}
+      <button class="popup-select__download" (click)="downloadFileByLanguage(language.entityId, false)">
         <svg
           id="download-icon"
           width="15"
@@ -265,7 +266,7 @@
             fill="#24292E" />
         </svg>
       </button>
-      <button class="popup-select__delete" (click)="deleteFile()">
+      <button class="popup-select__delete" (click)="deleteFileByLanguage(language.entityId)">
         <svg
           width="15"
           height="15"
@@ -283,7 +284,7 @@
     </div>
     <div class="popup__menu">
       <button class="popup__cancel-btn">Cancel</button>
-      <button class="popup__confirm-btn popup__add-lang-btn">Add language</button>
+      <button class="popup__confirm-btn popup__add-lang-btn" (click)="getAvailableLanguages()" >Add language</button>
     </div>
   </div>
 </div>
