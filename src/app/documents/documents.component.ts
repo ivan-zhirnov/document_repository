@@ -7,6 +7,7 @@ import {Document} from "./document.model";
 import {Language} from "./language.model";
 import {Classification} from "../classifications/classification.model";
 import {ClassificationService} from "../services/classification.service";
+import {i18nMetaToJSDoc} from "@angular/compiler/src/render3/view/i18n/meta";
 
 @Component({
   selector: 'app-documents',
@@ -37,6 +38,7 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
   selectedDocument!: Document | null;
 
   availableLanguages: Array<Language> = [];
+  searchString: string = '';
 
 
   constructor(private fileService: FileService,
@@ -217,12 +219,13 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
     });
   }
 
-  getFiles() {
+  getFiles(searchString: string = this.searchString) {
     this.fileService.getFiles()
       .subscribe(documents => {
         this.documents = documents.list.map((document: any) => {
           return new Document(document);
-        })
+        });
+        this.documents = this.documents.filter((document: Document) => this.searchString === '' || document!.name!.includes(this.searchString));
       });
   }
 

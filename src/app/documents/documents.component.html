@@ -13,7 +13,8 @@
       <span class="logo-link__title">Logo</span>
     </a>
     <form class="find-form">
-      <input type="text" placeholder="Search Files" class="find-form__input" />
+      <input type="text" placeholder="Search Files" class="find-form__input"
+      [(ngModel)]="searchString" (ngModelChange)="getFiles($event)" [ngModelOptions]="{standalone: true}"/>
     </form>
     <a href="/profile" class="profile-link">
       <img src="/assets/images/avatar.png" alt="John Smith" class="profile-link__avatar avatar" />
