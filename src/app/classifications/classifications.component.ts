@@ -20,6 +20,8 @@ export class ClassificationsComponent implements OnInit, AfterViewInit {
   classifications: Array<Classification> = [];
   newClassificationName: string = '';
 
+  searchString: string = '';
+
   protected readonly document = document;
 
   constructor(private classificationsService: ClassificationService) { }
@@ -129,12 +131,15 @@ export class ClassificationsComponent implements OnInit, AfterViewInit {
       })
   }
 
-  getClassifications() {
+  getClassifications(searchString: string = this.searchString) {
+    this.searchString = searchString;
     this.classificationsService.getClassifications()
       .subscribe(classifications => {
         this.classifications = classifications.list.map((classification: any) => {
           return new Classification(classification);
         })
+        this.classifications = this.classifications
+          .filter((classification: Classification) => this.searchString === '' || classification.name?.includes(this.searchString));
       });
   }
 

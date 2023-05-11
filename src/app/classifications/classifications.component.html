@@ -13,7 +13,8 @@
       <span class="logo-link__title">Logo</span>
     </a>
     <form class="find-form">
-      <input type="text" placeholder="Search Folders" class="find-form__input" />
+      <input type="text" placeholder="Search Folders" class="find-form__input"
+      [(ngModel)]="searchString" [ngModelOptions]="{standalone: true}" (ngModelChange)="getClassifications($event)"/>
     </form>
     <a href="/profile" class="profile-link">
       <img src="/assets/images/avatar.png" alt="John Smith" class="profile-link__avatar avatar" />
@@ -89,7 +90,7 @@
     </button>
     <h5 class="popup__heading">Sure you want to accept?</h5>
     <form class="popup__form popup-form classification-form">
-      <label for="" class="popup-form__label">Write your name</label>
+      <label for="" class="popup-form__label">Write classification name</label>
       <input [(ngModel)]="newClassificationName"
         type="text"
         name="folder-title"

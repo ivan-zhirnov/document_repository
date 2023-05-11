@@ -30,8 +30,9 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
   deleteFileBtns!: NodeListOf<Element>;
   updateFileBtns!: NodeListOf<Element>;
 
-  documents: Array<any> = [];
-  languages: Array<any> = [];
+  documents: Array<Document> = [];
+  languages: Array<Language> = [];
+  classifications: Array<Classification> = [];
   selectedLanguage!: Language | null;
   selectedClassification!: Classification | null;
   inputFile: File | undefined;
@@ -57,9 +58,12 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
       });
     this.classificationService.getClassifications()
       .subscribe(classifications => {
-        this.selectedClassification = classifications.list.map((classification: any) => {
+        this.classifications = classifications.list.map((classification: any) => {
           return new Classification(classification);
-        })[0];
+        });
+        // this.selectedClassification = classifications.list.map((classification: any) => {
+        //   return new Classification(classification);
+        // })[0];
       })
   }
 
@@ -181,6 +185,10 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
     this.selectedLanguage = language;
   }
 
+  selectClassification(classification: Classification) {
+    this.selectedClassification = classification;
+  }
+
   onFileSelected(event: any) {
     this.inputFile = event.target.files[0];
   }
@@ -220,6 +228,7 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
   }
 
   getFiles(searchString: string = this.searchString) {
+    this.searchString = searchString;
     this.fileService.getFiles()
       .subscribe(documents => {
         this.documents = documents.list.map((document: any) => {

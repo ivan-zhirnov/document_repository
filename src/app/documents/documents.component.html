@@ -104,10 +104,38 @@
     </button>
     <h2 class="popup__heading">Upload and attach files</h2>
     <h3 class="popup__subheading">Upload and attach files to this project.</h3>
-    <div class="popup__dropdown-container container">
+    <div>
+      <div class="popup__dropdown-container container">
+        <div class="dropdown">
+          <div class="select">
+            <span>{{!!this.selectedLanguage ? this.selectedLanguage.name : 'Choose language'}}</span>
+            <div class="icon">
+              <svg
+                id="up-icon"
+                height="25px"
+                id="Layer_1"
+                style="enable-background: new 0 0 512 512"
+                version="1.1"
+                viewBox="0 0 512 512"
+                width="25px"
+                xml:space="preserve"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <polygon points="396.6,352 416,331.3 256,160 96,331.3 115.3,352 256,201.5 " />
+                  </svg>
+            </div>
+          </div>
+          <input type="hidden" name="language" />
+          <ul class="dropdown-menu">
+            <li *ngFor="let language of languages" id="{{language.entityId}}" value="{{language.name}}"
+                (click)="selectLanguage(language)">{{language.name}}</li>
+          </ul>
+        </div>
+      </div>
+      <div class="popup__dropdown-container container">
       <div class="dropdown">
         <div class="select">
-          <span>{{!!this.selectedLanguage ? this.selectedLanguage.name : 'Choose language'}}</span>
+          <span>{{!!this.selectedClassification ? this.selectedClassification.name : 'Choose classification'}}</span>
           <div class="icon">
             <svg
               id="up-icon"
@@ -126,10 +154,11 @@
         </div>
         <input type="hidden" name="language" />
         <ul class="dropdown-menu">
-          <li *ngFor="let language of languages" id="{{language.entityId}}" value="{{language.name}}"
-              (click)="selectLanguage(language)">{{language.name}}</li>
+          <li *ngFor="let classification of classifications" id="{{classification.entityId}}" value="{{classification.name}}"
+              (click)="selectClassification(classification)">{{classification.name}}</li>
         </ul>
       </div>
+    </div>
     </div>
     <label class="popup--upload__upload-btn popup-upload-btn">
       <div class="popup-upload-btn__icon">
