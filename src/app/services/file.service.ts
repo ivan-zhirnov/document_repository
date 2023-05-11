@@ -14,18 +14,18 @@ export class FileService {
     return this.apiService.get("files");
   }
 
-  saveFile(file: File, classificationId: number, languageId: number): Observable<any> {
+  saveFile(file: File | undefined, classificationId: number, languageId: number): Observable<any> {
     const formData = new FormData();
-    formData.append("file", file);
+    formData.append("file", file ? file : '');
     formData.append("classificationId", classificationId.toString());
     formData.append("languageId", languageId.toString());
     return this.apiService.post("files", formData);
   }
 
-  updateFile(file: File, classificationId: number, languageId: number): Observable<any> {
+  addFileTranslation(file: File | undefined, documentId: number, languageId: number): Observable<any> {
     const formData = new FormData();
-    formData.append("file", file);
-    formData.append("classificationId", classificationId.toString());
+    formData.append("file", file ? file : '');
+    formData.append("documentId", documentId.toString());
     formData.append("languageId", languageId.toString());
     return this.apiService.patch("files", formData);
   }

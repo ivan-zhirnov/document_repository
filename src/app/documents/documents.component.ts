@@ -33,8 +33,10 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
   languages: Array<any> = [];
   selectedLanguage!: Language | null;
   selectedClassification!: Classification | null;
-  inputFile!: File;
+  inputFile: File | undefined;
   selectedDocument!: Document | null;
+
+  availableLanguages: Array<Language> = [];
 
 
   constructor(private fileService: FileService,
@@ -148,7 +150,7 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
   closePopupWindow(popupSelector: Element | null) {
     popupSelector!.classList.add("popup-window--hidden");
     this.selectedLanguage = null;
-    this.selectedDocument = null;
+    // this.selectedDocument = null;
   }
 
   openPopupWindow(popupSelector: any) {
@@ -186,7 +188,17 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
       .subscribe(() => {
         this.getFiles();
         this.closePopupWindow(this.popupWindowUploadFile);
+        this.inputFile = undefined;
       });
+  }
+
+  addFileTranslation() {
+    this.fileService.addFileTranslation(this.inputFile, this.selectedDocument!.entityId!, this.selectedLanguage?.entityId!)
+      .subscribe(() => {
+        this.getFiles();
+        this.closePopupWindow(this.popupWindowUnavailableTranslateWindow);
+        this.inputFile = undefined;
+      })
   }
 
   deleteFile() {
@@ -217,6 +229,12 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
 
   selectFile(document: Document) {
     this.selectedDocument = document;
+    this.fileService.getFreeLanguages(this.selectedDocument.entityId!)
+      .subscribe(languages => {
+        this.availableLanguages = languages.list.map((language: any) => {
+          return new Language(language);
+        })
+      })
   }
 
 
