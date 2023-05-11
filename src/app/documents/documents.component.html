@@ -247,7 +247,7 @@
     <h3 class="popup__subheading">Edit document translations</h3>
     <div class="popup__select" *ngIf="selectedDocument?.language?.name!">
       {{selectedDocument?.language?.name}}
-      <button class="popup-select__download" (click)="downloadFile()">
+      <button class="popup-select__download" (click)="downloadFile(false)">
         <svg
           id="download-icon"
           width="15"

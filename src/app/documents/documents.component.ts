@@ -206,10 +206,12 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
       });
   }
 
-  downloadFile() {
+  downloadFile(closePopup: boolean = true) {
     this.fileService.downloadFile(this.selectedDocument?.entityId!, this.selectedDocument?.language?.entityId!)
       .subscribe(data => {
-        this.closePopupWindow(this.popupWindowDownloadFile);
+        if (closePopup) {
+          this.closePopupWindow(this.popupWindowDownloadFile);
+        }
       });
   }
 
