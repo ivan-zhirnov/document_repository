@@ -78,13 +78,10 @@
           <span class="file-item__date">{{document.classification?.name}}</span>
         <span class="file-item__downloads-count">{{document.downloads}}</span>
         <div (click)="selectFile(document)" class="file-item-menu">
-          <button class="file-item-menu__download-btn">
+          <button class="file-item-menu__update-btn">
             <svg width="15" height="15">
               <use xlink:href="./assets/icons/download-file-icon.svg#download-icon"></use>
             </svg>
-          </button>
-          <button class="file-item-menu__update-btn">
-            <div class="update-file-icon"></div>
           </button>
           <button class="file-item-menu__delete-btn">
             <svg width="15" height="15">
