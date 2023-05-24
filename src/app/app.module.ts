@@ -17,6 +17,8 @@ import { DocumentsComponent } from './documents/documents.component';
 import {DocumentsRoutingModule} from "./documents/documents-routing.module";
 import { ClassificationsComponent } from './classifications/classifications.component';
 import {ClassificationsRoutingModule} from "./classifications/classifications-routing.module";
+import { VerifyEmailComponent } from './verify-email/verify-email.component';
+import {VerifyEmailRoutingModule} from "./verify-email/verify-email-routing.module";
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,7 +26,8 @@ import {ClassificationsRoutingModule} from "./classifications/classifications-ro
     LoginComponent,
     ForgotPasswordComponent,
     DocumentsComponent,
-    ClassificationsComponent
+    ClassificationsComponent,
+    VerifyEmailComponent
   ],
   imports: [
     AppRoutingModule,
@@ -34,6 +37,7 @@ import {ClassificationsRoutingModule} from "./classifications/classifications-ro
     ForgotPasswordRoutingModule,
     DocumentsRoutingModule,
     ClassificationsRoutingModule,
+    VerifyEmailRoutingModule,
     RouterModule,
     FormsModule,
     ReactiveFormsModule,

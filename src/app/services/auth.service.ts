@@ -43,17 +43,17 @@ export class AuthService {
     return this.apiService.get("authorizations/logout");
   }
 
-  confirmAccount(clientId: string, token: string): Observable<any> {
+  confirmAccount(clientId: number, token: string): Observable<any> {
     const formData = new FormData();
-    formData.append("clientId", clientId);
+    formData.append("clientId", clientId.toString());
     formData.append("token", token);
     const headers = new HttpHeaders({'enctype': 'multipart/form-data'});
     return this.apiService.post("authorizations/confirm-account", formData, {headers: headers})
   }
 
-  sendToken(clientId: string): Observable<any> {
+  sendToken(clientId: number): Observable<any> {
     const formData = new FormData();
-    formData.append("clientId", clientId);
+    formData.append("clientId", clientId.toString());
     const headers = new HttpHeaders({'enctype': 'multipart/form-data'});
     return this.apiService.post("authorizations/send-token", formData, {headers: headers})
   }
