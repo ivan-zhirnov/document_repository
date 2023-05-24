@@ -8,6 +8,7 @@ import {Language} from "./language.model";
 import {Classification} from "../classifications/classification.model";
 import {ClassificationService} from "../services/classification.service";
 import {i18nMetaToJSDoc} from "@angular/compiler/src/render3/view/i18n/meta";
+import {AuthService} from "../services/auth.service";
 
 @Component({
   selector: 'app-documents',
@@ -46,7 +47,9 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
   constructor(private fileService: FileService,
               private languagesService: LanguageService,
               private classificationService: ClassificationService,
-              private route: ActivatedRoute) {
+              private authService: AuthService,
+              private route: ActivatedRoute,
+              private router: Router) {
   }
 
   ngOnInit(): void {
@@ -281,6 +284,12 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
 
   getLanguage(document: Document | null): string {
     return document!.languages[0]!.name!;
+  }
+
+  logout() {
+    this.authService.logout().subscribe(() => {
+      this.router.navigate(['/'])
+    })
   }
 
 

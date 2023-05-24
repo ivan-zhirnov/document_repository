@@ -2,6 +2,7 @@ import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {ClassificationService} from "../services/classification.service";
 import {Classification} from "./classification.model";
 import {Router} from "@angular/router";
+import {AuthService} from "../services/auth.service";
 
 @Component({
   selector: 'app-classifications',
@@ -26,6 +27,7 @@ export class ClassificationsComponent implements OnInit, AfterViewInit {
   protected readonly document = document;
 
   constructor(private classificationsService: ClassificationService,
+              private authService: AuthService,
               private router: Router) { }
 
   ngOnInit(): void {
@@ -149,5 +151,10 @@ export class ClassificationsComponent implements OnInit, AfterViewInit {
     this.router.navigate([`documents`, classificationId]);
   }
 
+  logout() {
+    this.authService.logout().subscribe(() => {
+      this.router.navigate(['/'])
+    })
+  }
 
 }

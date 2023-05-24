@@ -609,6 +609,7 @@ body {
 }
 .profile-link {
   padding-left: 20px;
+  cursor: pointer;
 }
 .profile-link__avatar {
   width: 32px;

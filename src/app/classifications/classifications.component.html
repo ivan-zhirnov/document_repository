@@ -16,7 +16,7 @@
       <input type="text" placeholder="Search Folders" class="find-form__input"
       [(ngModel)]="searchString" [ngModelOptions]="{standalone: true}" (ngModelChange)="getClassifications($event)"/>
     </form>
-    <a href="/profile" class="profile-link">
+    <a (click)="logout()" class="profile-link">
       <img src="/assets/images/avatar.png" alt="John Smith" class="profile-link__avatar avatar" />
     </a>
   </div>
