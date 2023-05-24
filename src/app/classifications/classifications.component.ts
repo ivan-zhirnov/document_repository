@@ -1,6 +1,7 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {ClassificationService} from "../services/classification.service";
 import {Classification} from "./classification.model";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-classifications',
@@ -24,7 +25,8 @@ export class ClassificationsComponent implements OnInit, AfterViewInit {
 
   protected readonly document = document;
 
-  constructor(private classificationsService: ClassificationService) { }
+  constructor(private classificationsService: ClassificationService,
+              private router: Router) { }
 
   ngOnInit(): void {
     this.getClassifications();
@@ -141,6 +143,10 @@ export class ClassificationsComponent implements OnInit, AfterViewInit {
         this.classifications = this.classifications
           .filter((classification: Classification) => this.searchString === '' || classification.name?.includes(this.searchString));
       });
+  }
+
+  goToDocuments(classificationId: number) {
+    this.router.navigate([`documents`, classificationId]);
   }
 
 

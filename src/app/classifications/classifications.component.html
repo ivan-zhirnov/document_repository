@@ -66,7 +66,8 @@
       </div>
       <div *ngFor="let classification of classifications">
         <div class="file-item">
-          <h4 class="folder-item__heading">{{classification.name}}</h4>
+          <h4 class="folder-item__heading"
+              (click)="goToDocuments(classification.entityId!)">{{classification.name}}</h4>
           <div class="file-item-menu">
             <button class="file-item-menu__delete-btn" (click)="deleteClassification(classification)">
               <svg width="15" height="15">

@@ -2,7 +2,7 @@ import {AfterViewChecked, AfterViewInit, Component, OnInit} from '@angular/core'
 import * as $ from 'jquery';
 import {FileService} from "../services/file.service";
 import {LanguageService} from "../services/language.service";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {Document} from "./document.model";
 import {Language} from "./language.model";
 import {Classification} from "../classifications/classification.model";
@@ -40,15 +40,20 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
 
   availableLanguages: Array<Language> = [];
   searchString: string = '';
+  searchClassification!: number | null;
 
 
   constructor(private fileService: FileService,
               private languagesService: LanguageService,
               private classificationService: ClassificationService,
-              private router: Router) {
+              private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
+    this.route.params
+      .subscribe(params => {
+        this.searchClassification = +params['classificationId'];
+      });
     this.getFiles();
     this.languagesService.getLanguages()
       .subscribe(languages => {
@@ -61,10 +66,7 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
         this.classifications = classifications.list.map((classification: any) => {
           return new Classification(classification);
         });
-        // this.selectedClassification = classifications.list.map((classification: any) => {
-        //   return new Classification(classification);
-        // })[0];
-      })
+      });
   }
 
   loadAllSelectors() {
@@ -235,6 +237,9 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
           return new Document(document);
         });
         this.documents = this.documents.filter((document: Document) => this.searchString === '' || document!.name!.includes(this.searchString));
+        if (this.searchClassification) {
+          this.documents = this.documents.filter((document: Document) => document!.classification!.entityId === this.searchClassification);
+        }
       });
   }
 
