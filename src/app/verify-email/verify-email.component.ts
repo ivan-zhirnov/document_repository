@@ -46,7 +46,7 @@ export class VerifyEmailComponent implements OnInit {
       // когда обратный отсчет закончился, отображаем соответствующее уведомление
       if (ostatokVremeni < 0) {
         clearInterval(obratniyOtschet);
-        document.getElementById("time-remainer")!.innerHTML = "<span class = 'email'>Resend the code</span>";
+        document.getElementById("time-remainer")!.innerHTML = "<span class = 'email' style='cursor: pointer'>Resend the code</span>";
       }
     }, 1000);
   }
