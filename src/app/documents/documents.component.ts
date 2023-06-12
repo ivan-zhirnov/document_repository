@@ -69,6 +69,9 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
         this.classifications = classifications.list.map((classification: any) => {
           return new Classification(classification);
         });
+        if (this.searchClassification) {
+          this.selectClassification(this.classifications.filter(c => c.entityId === this.searchClassification)[0]);
+        }
       });
   }
 

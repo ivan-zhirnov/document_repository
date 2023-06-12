@@ -40,7 +40,9 @@ export class VerifyEmailComponent implements OnInit {
       // если значение текущей минуты или секунды меньше 10, добавляем вначале ведущий ноль
       secundi = secundi < 10 ? "0" + secundi : secundi;
       // отображаем результат таймера в элементе с id="deadline-timer"
-      document.getElementById("deadline-timer")!.innerHTML = secundi.toString();
+      if (document.getElementById("deadline-timer")) {
+        document.getElementById("deadline-timer")!.innerHTML = secundi.toString();
+      }
 
       // когда обратный отсчет закончился, отображаем соответствующее уведомление
       if (ostatokVremeni < 0) {
