@@ -27,7 +27,6 @@ export class VerifyEmailComponent implements OnInit {
     });
     this.route.params.subscribe(params => {
       this.userId = +params['userId'];
-      this.sendToken();
     });
     const kolichestvoSecund = 30;  // желаемое время таймера в минутах (5 минут)
     const tekuscheyeVremya = new Date(); // получаем сегодняшнюю дату и время
@@ -52,6 +51,7 @@ export class VerifyEmailComponent implements OnInit {
   }
   sendTokenWhenPossible() {
     if (document.getElementById("time-remainer")!.textContent === 'Resend the code') {
+      this.sendToken();
       window.location.reload();
     }
   }
