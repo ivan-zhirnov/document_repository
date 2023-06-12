@@ -891,7 +891,7 @@ body {
   box-shadow: inset 0px -1px 0px #e7e7ed;
 }
 .file-item__icon {
-  margin-right: 32px;
+  margin-right: 20px;
 }
 .file-item__icon * {
   width: 32px;
