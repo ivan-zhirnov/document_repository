@@ -959,3 +959,7 @@ body {
   background-repeat: no-repeat;
   background-size: contain;
 }/*# sourceMappingURL=style.css.map */
+
+.error {
+  color: #d92d20;
+}

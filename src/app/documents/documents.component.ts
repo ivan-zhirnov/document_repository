@@ -43,6 +43,8 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
   searchString: string = '';
   searchClassification!: number | null;
 
+  errorMessage: string = '';
+
 
   constructor(private fileService: FileService,
               private languagesService: LanguageService,
@@ -113,10 +115,12 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
       });
     });
 
-    this.popupWindowUploadFileConfirmBtn!.addEventListener("click", () => {
-      this.closePopupWindow(this.popupWindowUploadFile);
-      this.openPopupWindow(this.popupWindowUpdate);
-    });
+    // this.popupWindowUploadFileConfirmBtn!.addEventListener("click", () => {
+    //   if (!this.errorMessage) {
+    //     this.closePopupWindow(this.popupWindowUploadFile);
+    //     this.openPopupWindow(this.popupWindowUpdate);
+    //   }
+    // });
 
     this.popupWindowCancelBtns.forEach((btn) => {
       btn.addEventListener("click", (e) => {
@@ -164,6 +168,8 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
   closePopupWindow(popupSelector: Element | null) {
     popupSelector!.classList.add("popup-window--hidden");
     this.selectedLanguage = null;
+    this.errorMessage = '';
+    this.inputFile = undefined;
     // this.selectedDocument = null;
   }
 
@@ -191,22 +197,28 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
 
   selectLanguage(language: any) {
     this.selectedLanguage = language;
+    this.errorMessage = '';
   }
 
   selectClassification(classification: Classification) {
     this.selectedClassification = classification;
+    this.errorMessage = '';
   }
 
   onFileSelected(event: any) {
     this.inputFile = event.target.files[0];
+    this.errorMessage = '';
   }
 
   saveFile() {
     this.fileService.saveFile(this.inputFile, this.selectedClassification!.entityId!, this.selectedLanguage!.entityId!)
-      .subscribe(() => {
+      .subscribe(complete => {
         this.getFiles();
-        this.closePopupWindow(this.popupWindowUploadFile);
         this.inputFile = undefined;
+        this.closePopupWindow(this.popupWindowUploadFile);
+        this.openPopupWindow(this.popupWindowUpdate);
+      }, error => {
+        this.errorMessage = error.error.status.description;
       });
   }
 
@@ -215,7 +227,10 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
       .subscribe(() => {
         this.getFiles();
         this.closePopupWindow(this.popupWindowUnavailableTranslateWindow);
+        this.openPopupWindow(this.popupWindowUpdate);
         this.inputFile = undefined;
+      }, error => {
+        this.errorMessage = error.error.status.description;
       })
   }
 
@@ -269,7 +284,8 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
 
   selectFile(document: Document) {
     this.selectedDocument = document;
-    this.getAvailableLanguages()
+    this.getAvailableLanguages();
+    this.errorMessage = '';
   }
 
   getAvailableLanguages() {

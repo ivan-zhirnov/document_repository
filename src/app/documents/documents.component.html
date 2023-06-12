@@ -219,6 +219,7 @@
              style="display: none"
              type="file"/>
     </label>
+    <a class="error" *ngIf="errorMessage">{{errorMessage}}</a>
     <div class="popup__menu">
       <button class="popup__cancel-btn">Cancel</button>
       <button (click)="saveFile()"
@@ -482,6 +483,7 @@
              style="display: none"
              type="file"/>
     </label>
+    <a class="error" *ngIf="errorMessage">{{errorMessage}}</a>
     <div class="popup__menu">
       <button class="popup__cancel-btn">Cancel</button>
       <button (click)="addFileTranslation()"
