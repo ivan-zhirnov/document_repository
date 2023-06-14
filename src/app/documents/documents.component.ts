@@ -262,7 +262,9 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
         this.documents = documents.list.map((document: any) => {
           return new Document(document);
         });
-        this.documents = this.documents.filter((document: Document) => this.searchString === '' || document!.name!.includes(this.searchString));
+        this.documents = this.documents.filter((document: Document) =>
+          this.searchString === '' || document!.name!.toLowerCase().includes(this.searchString.toLowerCase())
+        );
         if (this.searchClassification) {
           this.documents = this.documents.filter((document: Document) => document!.classification!.entityId === this.searchClassification);
         }

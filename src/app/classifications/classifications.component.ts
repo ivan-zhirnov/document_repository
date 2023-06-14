@@ -88,16 +88,19 @@ export class ClassificationsComponent implements OnInit, AfterViewInit {
     window.removeEventListener("click", this.closePopupWindowClick);
     window.removeEventListener("keydown", this.closePopupWindowByEsc);
   }
+
   openPopupWindow(popupSelector: any) {
     popupSelector.classList.remove("popup-window--hidden");
     window.addEventListener("click", this.closePopupWindowClick);
-    window.addEventListener("keydown",this. closePopupWindowByEsc);
+    window.addEventListener("keydown", this.closePopupWindowByEsc);
   }
+
   closePopupWindowClick(e: any) {
     if (e.target === this.classificationPopupWindow) {
       this.closePopupWindow(this.classificationPopupWindow);
     }
   }
+
   closePopupWindowByEsc(e: any) {
     if (e.key === "Escape") {
       this.closePopupWindow(this.classificationPopupWindow);
@@ -147,7 +150,8 @@ export class ClassificationsComponent implements OnInit, AfterViewInit {
           return new Classification(classification);
         })
         this.classifications = this.classifications
-          .filter((classification: Classification) => this.searchString === '' || classification.name?.includes(this.searchString));
+          .filter((classification: Classification) =>
+            this.searchString === '' || classification.name?.toLowerCase().includes(this.searchString.toLowerCase()));
       });
   }
 
@@ -160,6 +164,4 @@ export class ClassificationsComponent implements OnInit, AfterViewInit {
       this.router.navigate(['/'])
     })
   }
-
-  protected readonly Role = Role;
 }
