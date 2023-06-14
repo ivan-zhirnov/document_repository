@@ -3,6 +3,7 @@ import {ClassificationService} from "../services/classification.service";
 import {Classification} from "./classification.model";
 import {Router} from "@angular/router";
 import {AuthService} from "../services/auth.service";
+import {Role} from "../login/user-role.enum";
 
 @Component({
   selector: 'app-classifications',
@@ -23,6 +24,8 @@ export class ClassificationsComponent implements OnInit, AfterViewInit {
   newClassificationName: string = '';
 
   searchString: string = '';
+  role = Role;
+  currentRole: string = '';
 
   protected readonly document = document;
 
@@ -31,6 +34,7 @@ export class ClassificationsComponent implements OnInit, AfterViewInit {
               private router: Router) { }
 
   ngOnInit(): void {
+    this.currentRole = localStorage.getItem("role")!.toString();
     this.getClassifications();
   }
 
@@ -52,7 +56,7 @@ export class ClassificationsComponent implements OnInit, AfterViewInit {
       this.closePopupWindow(this.classificationPopupWindow);
     });
 
-    this.addClassificationBtn!.addEventListener("click", () => {
+    this.addClassificationBtn?.addEventListener("click", () => {
       this.openPopupWindow(this.classificationPopupWindow);
     });
 
@@ -157,4 +161,5 @@ export class ClassificationsComponent implements OnInit, AfterViewInit {
     })
   }
 
+  protected readonly Role = Role;
 }

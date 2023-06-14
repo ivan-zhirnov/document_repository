@@ -30,7 +30,7 @@
     <div class="content__header">
       <h2 class="content__heading">Folders</h2>
       <div class="content-menu">
-        <button class="content-menu-btn content-menu-btn-classification">
+        <button class="content-menu-btn content-menu-btn-classification" *ngIf="currentRole === role.ADMIN">
           <span class="content-menu-btn__title">ADD CLASSIFICATION</span>
           <div class="content-menu-btn__icon">
             <div class="arrow-icon">
@@ -59,7 +59,8 @@
           <h4 class="folder-item__heading"
               (click)="goToDocuments(classification.entityId!)">{{classification.name}}</h4>
           <div class="file-item-menu">
-            <button class="file-item-menu__delete-btn" (click)="deleteClassification(classification)">
+            <button class="file-item-menu__delete-btn" (click)="deleteClassification(classification)"
+                    *ngIf="currentRole === role.ADMIN">
               <svg width="15" height="15">
                 <use xlink:href="./assets/icons/delete-file-icon.svg#delete-icon"></use>
               </svg>

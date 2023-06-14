@@ -10,7 +10,7 @@ import {Route, Router} from "@angular/router";
 })
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
-  login: string = 'ivanov@mail.ru';
+  login: string = 'ivanov@mail.ruu';
   password: string = '12345';
   loginError: string = '';
 
@@ -27,6 +27,7 @@ export class LoginComponent implements OnInit {
 
   logIn(value: any) {
     this.authService.login(value.login, value.password).subscribe(res => {
+      localStorage.setItem("role", res.object.client.role);
       this.router.navigate(['classifications']);
       }, error => {
       this.loginError = error.error.status.description;

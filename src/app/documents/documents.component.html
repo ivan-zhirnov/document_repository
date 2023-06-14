@@ -42,7 +42,7 @@
     <div class="content__header">
       <h2 class="content__heading">Files</h2>
       <div class="content-menu">
-        <button class="content-menu-btn content-menu-btn-file">
+        <button class="content-menu-btn content-menu-btn-file" *ngIf="currentRole === role.ADMIN">
           <span class="content-menu-btn__title">ADD FILE</span>
           <div class="content-menu-btn__icon">
             <div class="arrow-icon">
@@ -81,14 +81,14 @@
           <span class="file-item__date">{{document.classification?.name}}</span>
           <span class="file-item__downloads-count">{{document.downloads}}</span>
           <div (click)="selectFile(document)"
-               class="file-item-menu">
+               class="file-item-menu" [ngStyle]="currentRole !== role.ADMIN ? {'margin-left': '60px'} : null">
             <button class="file-item-menu__update-btn">
               <svg height="15"
                    width="15">
                 <use xlink:href="./assets/icons/download-file-icon.svg#download-icon"></use>
               </svg>
             </button>
-            <button class="file-item-menu__delete-btn">
+            <button class="file-item-menu__delete-btn" *ngIf="currentRole === role.ADMIN">
               <svg height="15"
                    width="15">
                 <use xlink:href="./assets/icons/delete-file-icon.svg#delete-icon"></use>
@@ -365,7 +365,7 @@
             fill-rule="evenodd"/>
         </svg>
       </button>
-      <button (click)="deleteFileByLanguage(language.entityId)"
+      <button (click)="deleteFileByLanguage(language.entityId)" *ngIf="currentRole === role.ADMIN"
               class="popup-select__delete">
         <svg
           fill="none"
@@ -382,7 +382,7 @@
         </svg>
       </button>
     </div>
-    <div class="popup__menu">
+    <div class="popup__menu" *ngIf="currentRole === role.ADMIN">
       <button class="popup__cancel-btn">Cancel</button>
       <button (click)="getAvailableLanguages()"
               class="popup__confirm-btn popup__add-lang-btn">Add language

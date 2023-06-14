@@ -9,6 +9,7 @@ import {Classification} from "../classifications/classification.model";
 import {ClassificationService} from "../services/classification.service";
 import {i18nMetaToJSDoc} from "@angular/compiler/src/render3/view/i18n/meta";
 import {AuthService} from "../services/auth.service";
+import {Role} from "../login/user-role.enum";
 
 @Component({
   selector: 'app-documents',
@@ -45,6 +46,9 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
 
   errorMessage: string = '';
 
+  role = Role;
+  currentRole: string = '';
+
 
   constructor(private fileService: FileService,
               private languagesService: LanguageService,
@@ -55,6 +59,7 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    this.currentRole = localStorage.getItem("role")!.toString();
     this.route.params
       .subscribe(params => {
         this.searchClassification = +params['classificationId'];
@@ -98,7 +103,7 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
     this.deleteFileBtns = document.querySelectorAll(".file-item-menu__delete-btn");
     this.updateFileBtns = document.querySelectorAll(".file-item-menu__update-btn");
 
-    this.uploadFileBtn!.addEventListener("click", (e) => {
+    this.uploadFileBtn?.addEventListener("click", (e) => {
       this.openPopupWindow(this.popupWindowUploadFile);
     });
 
