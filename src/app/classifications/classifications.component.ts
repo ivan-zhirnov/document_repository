@@ -27,6 +27,7 @@ export class ClassificationsComponent implements OnInit, AfterViewInit {
   role = Role;
   currentRole: string = '';
 
+  sortDirect: boolean = true;
   protected readonly document = document;
 
   constructor(private classificationsService: ClassificationService,
@@ -163,5 +164,13 @@ export class ClassificationsComponent implements OnInit, AfterViewInit {
     this.authService.logout().subscribe(() => {
       this.router.navigate(['/'])
     })
+  }
+
+  sortObjects() {
+    this.classifications.sort((a, b) => a.name! > b.name! ? 1 : -1);
+    if (!this.sortDirect) {
+      this.classifications.reverse();
+    }
+    this.sortDirect = !this.sortDirect;
   }
 }

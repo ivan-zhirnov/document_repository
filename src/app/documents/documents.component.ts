@@ -48,6 +48,7 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
 
   role = Role;
   currentRole: string = '';
+  sortDirect: boolean = true;
 
 
   constructor(private fileService: FileService,
@@ -316,6 +317,14 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
     this.authService.logout().subscribe(() => {
       this.router.navigate(['/'])
     })
+  }
+
+  sortObjects() {
+    this.documents.sort((a, b) => a.name! > b.name! ? 1 : -1);
+    if (!this.sortDirect) {
+      this.documents.reverse();
+    }
+    this.sortDirect = !this.sortDirect;
   }
 
 
